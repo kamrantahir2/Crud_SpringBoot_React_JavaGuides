@@ -1,5 +1,6 @@
 package com.example.crud_springboot_react_javaguides.service;
 
+import com.example.crud_springboot_react_javaguides.exception.ResourceNotFoundException;
 import com.example.crud_springboot_react_javaguides.mapper.EmployeeMapper;
 import com.example.crud_springboot_react_javaguides.model.Employee;
 import com.example.crud_springboot_react_javaguides.repository.EmployeeRepository;
@@ -37,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto getEmployeeById(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with ID: " + employeeId));
         EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
 
         return employeeDto;
@@ -45,11 +46,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto updateEmployee(Long employeeId, EmployeeDto employeeDto) {
-        return null;
+        Employee existingEmployee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with ID: " + employeeId));
+        existingEmployee.setFirstName(employeeDto.getFirstName());
+        existingEmployee.setLastName(employeeDto.getLastName());
+        existingEmployee.setEmail(employeeDto.getEmail());
+
+        employeeRepository.save(existingEmployee);
+        return EmployeeMapper.mapToEmployeeDto(existingEmployee);
     }
 
     @Override
     public void deleteEmployee(Long employeeId) {
+        Employee existingEmployee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with ID: " + employeeId));
 
+        employeeRepository.delete(existingEmployee);
     }
 }
