@@ -22,17 +22,25 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<EmployeeDto> employeeDtos = employees.stream()
                 .map((employee) -> EmployeeMapper.mapToEmployeeDto(employee))
                 .collect(Collectors.toList());
+
         return employeeDtos;
     }
 
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
-        return null;
+        Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
+        Employee savedEmployee = employeeRepository.save(employee);
+
+        return EmployeeMapper.mapToEmployeeDto(savedEmployee);
     }
 
     @Override
     public EmployeeDto getEmployeeById(Long employeeId) {
-        return null;
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow();
+        EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
+
+        return employeeDto;
     }
 
     @Override
