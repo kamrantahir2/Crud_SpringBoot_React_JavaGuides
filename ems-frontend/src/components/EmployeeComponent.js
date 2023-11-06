@@ -117,9 +117,9 @@ const EmployeeComponent = () => {
                   Submit
                 </button>
 
-                <Link to="/employees" className="btn btn-danger">
+                {/* <Link to="/employees" className="btn btn-danger">
                   Cancel
-                </Link>
+                </Link> */}
               </form>
             </div>
           </div>
