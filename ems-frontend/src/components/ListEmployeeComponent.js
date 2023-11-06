@@ -25,10 +25,12 @@ const ListEmployeeComponent = () => {
             <h2 className="text-center"> List Employees </h2>
             <table className="table table-bordered table-striped">
                 <thead>
-                    <th> Employee ID </th>
-                    <th> Employee First Name </th>
-                    <th> Emplyee Last Name </th>
-                    <th> Employee Email ID </th>
+                    <tr>
+                        <th> Employee ID </th>
+                        <th> Employee First Name </th>
+                        <th> Emplyee Last Name </th>
+                        <th> Employee Email ID </th>
+                    </tr>
                 </thead>
                 <tbody>
                     {
